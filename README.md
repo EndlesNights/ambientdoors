@@ -10,7 +10,7 @@
 * [https://github.com/EndlesNights/ambientdoors](https://github.com/EndlesNights/ambientdoors)
 
 ### Description
-Ambient Doors module for Foundry VTT - adds easily customization hocks for sounds effects that all user can hear when interacting with doors. Just open up a doors configeration window and you'll be able to enter in the sound file path ways that you wish to play when: a door is opened, a door is closed, a door is locked, or a door is unlocked. If you do not wish for any sound effect to play when action is taken, just leave the field blank.
+Ambient Doors module for Foundry VTT - adds easily customized sounds effects that trigger for all user when interacting with doors. Just open up a doors configeration window to initilize the set up for that door, and you'll be able to enter in the sound file path ways that you wish to play when: a door is opened, a door is closed, a door is locked, or a door is unlocked. If you do not wish for any sound effect to play when action is taken, just leave the field blank. Some default sounds have been provided.
 
 ## Installation
 ### Method 1
