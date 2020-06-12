@@ -29,5 +29,6 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 
 Rezied the wall configuration window when editing doors so that all of the elements fit into the window without the user having to scroll.
 
-**Version 1.0.1**
+**Version 1.0.0**
+
 Inistial release version.
