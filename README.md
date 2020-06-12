@@ -2,7 +2,7 @@
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 1.0.0
+* **Version**: 1.1.0
 * **Foundry VTT Compatibility**: 0.6.0 to 0.6.2 (Havn't tried it with older versions)
 * **System Compatibility**: Universal
 
@@ -25,8 +25,8 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 
 ## Change Log
 
-# Version 1.1.0
+**Version 1.1.0**
 Rezied the wall configuration window when editing doors so that all of the elements fit into the window without the user having to scroll.
 
-# Version 1.0.1
+**Version 1.0.1**
 Inistial release version.
