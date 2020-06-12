@@ -34,8 +34,18 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 		
 	if(data.object.door == 0) // if it's not a door don't worry
 	{
+		app.setPosition({
+		height: 270,
+		width: 400
+		});
+		
 		return;
 	}
+	
+	app.setPosition({
+		height: 460,
+		width: 520
+	});
 
 	var closeFlag = app.object.getFlag("ambientdoors", "closePath");
 	var openFlag = app.object.getFlag("ambientdoors", "openPath");
