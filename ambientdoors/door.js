@@ -229,7 +229,7 @@ Hooks.on("ready", () => {
         scope: 'world',
         config: true,
         default: 0.8,
-        type: Number
+        type: Number,
 		range: {min:0, max:2, step:0.05}
     });
 
@@ -248,7 +248,7 @@ Hooks.on("ready", () => {
         scope: 'world',
         config: true,
         default: 0.8,
-        type: Number
+        type: Number,
 		range: {min:0, max:2, step:0.05}
     });
 	
@@ -267,7 +267,7 @@ Hooks.on("ready", () => {
         scope: 'world',
         config: true,
         default: 0.8,
-        type: Number
+        type: Number,
 		range: {min:0, max:2, step:0.05}
     });
 });
