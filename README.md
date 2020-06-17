@@ -28,11 +28,11 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 **Version 2.0.0**
 
 Complete Internal rewrite
-*Volume Levels can now be adjusted for each sound files.
-*All doors should now have sound effects by default without having to open up the wall configation window.
-*Added a Module settings were the Gamemaster can set the pathways for all default sound files, and volume levels.
-*Fixed issue where sounds would not play properly after a client refresh
-*Fixed issue were sounds would play multiple times depending on number of client
+* Volume Levels can now be adjusted for each sound files.
+* All doors should now have sound effects by default without having to open up the wall configation window.
+* Added a Module settings were the Gamemaster can set the pathways for all default sound files, and volume levels.
+* Fixed issue where sounds would not play properly after a client refresh.
+* Fixed issue were sounds would play multiple times depending on number of client.
 
 **Version 1.1.0**
 
