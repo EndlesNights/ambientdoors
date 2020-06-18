@@ -5,7 +5,7 @@
 	"version": "2.0.0",
 	"author": "EndlesNights#9000",
 	"minimumCoreVersion": "0.6.0",
-	"compatibleCoreVersion": "0.6.2",
+	"compatibleCoreVersion": "0.6.3",
 	"scripts": ["door.js"],
 	"url": "https://github.com/EndlesNights/ambientdoors",
 	"manifest": "https://raw.githubusercontent.com/EndlesNights/ambientdoors/master/ambientdoors/module.json",
