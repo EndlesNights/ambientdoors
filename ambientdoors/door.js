@@ -257,7 +257,7 @@ Hooks.on("ready", () => {
         hint: "The default sound effect that will be played when a door is unlocked.",
         scope: 'world',
         config: true,
-        default: "modules/ambientdoors/defaultSounds/DoorUnLockSound.wav",
+        default: "modules/ambientdoors/defaultSounds/DoorUnlockSound.wav",
         type: String
     });
 
