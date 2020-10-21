@@ -201,7 +201,7 @@ Hooks.on("ready", () => {
         hint: "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
 		scope: "world",
 		config: true,
-		default: "gm",
+		default: "2",
 		choices: {1: "Player", 2: "Trusted", 3: "Assistant", 4: "Game Master"},
 		type: String
 	});
