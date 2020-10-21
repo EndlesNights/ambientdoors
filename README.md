@@ -2,8 +2,8 @@
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 2.0.0
-* **Foundry VTT Compatibility**: 0.6.0 to 0.6.3 (Havn't tried it with older versions)
+* **Version**: 2.0.3
+* **Foundry VTT Compatibility**: 0.6.0 to 0.7.5 (Havn't tried it with older versions)
 * **System Compatibility**: Universal
 
 ### Link(s) to Module
