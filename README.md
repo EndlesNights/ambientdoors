@@ -15,7 +15,7 @@ Ambient Doors module for Foundry VTT - Adds easily customized sounds effects tha
 ## Installation
 ### Method 1
 * Open the Foundry application and click **"Install Module"** in the **"Add-On Modules"** tab.
-* Paste the following link: https://raw.githubusercontent.com/EndlesNights/ambientdoors/master/ambientdoors/module.json
+* Paste the following link: https://raw.githubusercontent.com/EndlesNights/ambientdoors/master/module.json
 * Click "Install"
 * Activate the module in your World using **Manage Modules** under the **Game Settings** tab.
 
