@@ -1,15 +1,17 @@
 var superwall_id = '';
 var mod = "ambientdoors"; // our mod scope & name
 
-Hooks.on("preUpdateWall", async (scene, object, updateData,userID) => {
+//TODO
+//Change Play to play ambient sound, add range value. If global range, play sound as is.
+//Set Configrability to Locked Door jingle sounds. <-- Can't be done with current method, no Hook is generated when clicking on locked door.
 
+Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
 
-//this.game.settings.get(mod, "closeDoorPathDefault")
-	if(object.door == 0 || updateData.ds == null)
+	if((object.door == 0 || updateData.ds == null) //If not a door OR door state not updating
+		|| this.game.data.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && this.game.keyboard.isDown("Alt")) // Sneaky Door Opening Mode
 	{
 		return;
-	}
-	
+	}	
 	
 	let doorData;
 	try
@@ -71,7 +73,7 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	}
 	
 	app.setPosition({
-		height: 570,
+		height: 590,
 		width: 520
 	});
 
@@ -194,6 +196,15 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 });
 
 Hooks.on("ready", () => {
+	game.settings.register(mod, "stealthDoor",{
+		name: "Silent Door Permission Level",
+        hint: "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
+		scope: "world",
+		config: true,
+		default: "gm",
+		choices: {1: "Player", 2: "Trusted", 3: "Assistant", 4: "Game Master"},
+		type: String
+	});
 
     game.settings.register(mod, "closeDoorPathDefault", {
         name: "Door Close",

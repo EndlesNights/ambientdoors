@@ -2,7 +2,7 @@
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 2.0.3
+* **Version**: 2.1.0
 * **Foundry VTT Compatibility**: 0.6.0 to 0.7.5 (Havn't tried it with older versions)
 * **System Compatibility**: Universal
 
@@ -24,6 +24,11 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 
 
 ## Change Log
+
+**Version 2.1.0**
+
+Update to Foundry VTT 0.7.5
+Added Silent Door Open mode, with configurable permissions, if a valid user opens a door while holding down Alt, the doors audio will not play.
 
 **Version 2.0.0**
 
