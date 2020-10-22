@@ -1,0 +1,13 @@
+{
+	"name": "ambientdoors",
+	"title": "Ambient Doors",
+	"description": "A controller for playing ambient sounds effects when opening and closing doors",
+	"version": "2.1.0",
+	"author": "EndlesNights#9000",
+	"minimumCoreVersion": "0.6.0",
+	"compatibleCoreVersion": "0.7.5",
+	"scripts": ["door.js"],
+	"url": "https://github.com/EndlesNights/ambientdoors",
+	"manifest": "https://raw.githubusercontent.com/EndlesNights/ambientdoors/master/module.json",
+	"download": "https://github.com/EndlesNights/ambientdoors/raw/master/ambientdoors.zip"
+}
