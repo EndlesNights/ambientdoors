@@ -27,8 +27,8 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 
 **Version 2.1.0**
 
-Update to Foundry VTT 0.7.5
-Added Silent Door Open mode, with configurable permissions, if a valid user opens a door while holding down Alt, the doors audio will not play.
+*Update to Foundry VTT 0.7.5
+*Added Silent Door Open mode, with configurable permissions, if a valid user opens a door while holding down Alt, the doors audio will not play.
 
 **Version 2.0.0**
 
