@@ -3,8 +3,31 @@ var mod = "ambientdoors"; // our mod scope & name
 
 //TODO
 //Change Play to play ambient sound, add range value. If global range, play sound as is.
-//Set Configrability to Locked Door jingle sounds. <-- Can't be done with current method, no Hook is generated when clicking on locked door.
 
+Hooks.once("init", () => {
+	//get the core doorMouse handler to be used in most cases
+	const doorMouseDownHandler = DoorControl.prototype._onMouseDown;
+	DoorControl.prototype._onMouseDown = function (event) {
+		
+		//check to see if the door is locked, otherwise use normal handler
+		if(this.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+			// Call new handler first. Only allow the original handler to run if our new handler does not return ture
+			const eventLockJingle = onDoorMouseDown.call(this, event)
+			if (eventLockJingle) return
+		}
+		return doorMouseDownHandler.call(this, event)
+	}
+});
+
+function onDoorMouseDown(event) {
+	const playpath = this.wall.data.flags.ambientdoors.doorData.lockJinglePath;
+	const playVolume = this.wall.data.flags.ambientdoors.doorData.lockJingleLevel;
+	
+	if(playpath != "" && playpath != null) AudioHelper.play({src: playpath, volume: playVolume, autoplay: true, loop: false}, true);
+	
+	//return true here to block the normal handler wich will only play sound on a per player basis.
+	return true;
+}
 Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
 
 	if((object.door == 0 || updateData.ds == null) //If not a door OR door state not updating
@@ -26,7 +49,7 @@ Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
 			lockPath: game.settings.get(mod, "lockDoorPathDefault"),
 			lockLevel: game.settings.get(mod, "lockDoorLevelDefault"),
 			unlockPath: game.settings.get(mod, "unlockDoorPathDefault"),
-			unlockLevel: game.settings.get(mod, "unlockDoorLevelDefault")			
+			unlockLevel: game.settings.get(mod, "unlockDoorLevelDefault")
 		}
 	} //If no data is set use default sounds.
 	
@@ -73,7 +96,7 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	}
 	
 	app.setPosition({
-		height: 590,
+		height: 650,
 		width: 520
 	});
 
@@ -89,7 +112,9 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 			lockPath: game.settings.get(mod, "lockDoorPathDefault"),
 			lockLevel: game.settings.get(mod, "lockDoorLevelDefault"),
 			unlockPath: game.settings.get(mod, "unlockDoorPathDefault"),
-			unlockLevel: game.settings.get(mod, "unlockDoorLevelDefault")	
+			unlockLevel: game.settings.get(mod, "unlockDoorLevelDefault"),
+			lockJinglePath: game.settings.get(mod, "lockedDoorJinglePathDefault"),
+			lockJingleLevel: game.settings.get(mod, "lockedDoorJingleLevelDefault")
 		};
 		app.object.setFlag(mod, "doorData", thisDoor);
 	}
@@ -102,6 +127,7 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	var openFlag = thisDoor.openPath;
 	var lockFlag = thisDoor.lockPath;
 	var unLockFlag = thisDoor.unlockPath;
+	var lockJingleFlag = thisDoor.lockJinglePath;
 	
 	const message =`
 	<div class="form-group">
@@ -180,7 +206,25 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 			<input type="range" name="flags.ambientdoors.doorData.unlockLevel" value=${thisDoor.unlockLevel}  min=0 max=2 step=0.05 data-dtype="Number">
 			<span class="range-value">${thisDoor.unlockLevel}</span>
 		</div>
-	</div>		
+	</div>
+	
+    <div class="form-group">
+		<label>Locked Door Jingle</label>
+		<div class="form-fields">
+			<button type="button" class="file-picker" data-type="sound" data-target="flags.ambientdoors.doorData.lockJinglePath" title="Browse Files" tabindex="-1">
+				<i class="fas fa-file-import fa-fw"></i>
+			</button>
+			<input class="sound" type="text" name="flags.ambientdoors.doorData.lockJinglePath" value="${lockJingleFlag ? lockJingleFlag : ``}" placeholder="Locked Door Jingle Sound Path" data-dtype="String" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label>Locked Door Jingle Sound Level</label>
+		<div class="form-fields">
+			<input type="range" name="flags.ambientdoors.doorData.lockJingleLevel" value=${thisDoor.lockJingleLevel}  min=0 max=2 step=0.05 data-dtype="Number">
+			<span class="range-value">${thisDoor.lockJingleLevel}</span>
+		</div>
+	</div>
 	`
 
 	html.find(".form-group").last().after(message);
@@ -188,11 +232,13 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	const button2 = html.find('button[data-target="flags.ambientdoors.doorData.openPath"]')[0];
 	const button3 = html.find('button[data-target="flags.ambientdoors.doorData.lockPath"]')[0];
 	const button4 = html.find('button[data-target="flags.ambientdoors.doorData.unlockPath"]')[0];
+	const button5 = html.find('button[data-target="flags.ambientdoors.doorData.lockJinglePath"]')[0];
 	
 	app._activateFilePicker(button);
 	app._activateFilePicker(button2);
 	app._activateFilePicker(button3);
 	app._activateFilePicker(button4);
+	app._activateFilePicker(button5);
 });
 
 Hooks.on("ready", () => {
@@ -274,6 +320,25 @@ Hooks.on("ready", () => {
 
     game.settings.register(mod, "unlockDoorLevelDefault", {
         name: "Unlock Door Volume Level",
+        hint: "The default volume level that the unlock door SFX will be played at.",
+        scope: 'world',
+        config: true,
+        default: 0.8,
+        type: Number,
+		range: {min:0, max:2, step:0.05}
+    });	
+	
+    game.settings.register(mod, "lockedDoorJinglePathDefault", {
+        name: "Locked Door Jingle",
+        hint: "The default sound effect that will be played when a locked door is attempted to be opened.",
+        scope: 'world',
+        config: true,
+        default: "sounds/lock.wav",
+        type: String
+    });
+
+    game.settings.register(mod, "lockedDoorJingleLevelDefault", {
+        name: "Locked Door Jingle Volume Level",
         hint: "The default volume level that the unlock door SFX will be played at.",
         scope: 'world',
         config: true,
