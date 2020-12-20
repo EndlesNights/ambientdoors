@@ -1,9 +1,9 @@
-![](https://img.shields.io/badge/Foundry-v0.7.5-informational)
+![](https://img.shields.io/badge/Foundry-v0.7.9-informational)
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 2.1.0
-* **Foundry VTT Compatibility**: 0.6.0 to 0.7.5 (Havn't tried it with older versions)
+* **Version**: 2.2.0
+* **Foundry VTT Compatibility**: 0.6.0 to 0.7.9 (Havn't tried it with older versions)
 * **System Compatibility**: Universal
 
 ### Link(s) to Module
@@ -24,6 +24,12 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 
 
 ## Change Log
+
+**Version 2.2.0**
+
+*Update to Foundry VTT 0.7.9
+*Added an option to custimize the lock jingle sound effect that plays when attempting to open a locked door.
+*Lock jingle sound effect now players for everyone instead of just the user attempting to open the door.
 
 **Version 2.1.0**
 
