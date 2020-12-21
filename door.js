@@ -2,7 +2,7 @@ var superwall_id = '';
 var mod = "ambientdoors"; // our mod scope & name
 
 //TODO
-//Change Play to play ambient sound, add range value. If global range, play sound as is.
+//Change Play to play ambient sound, add range value. If global range, play sound as is. Waiting  on Foundry 0.8.x
 
 Hooks.once("init", () => {
 	//get the core doorMouse handler to be used in most cases
@@ -20,13 +20,31 @@ Hooks.once("init", () => {
 });
 
 function onDoorMouseDown(event) {
-	const playpath = this.wall.data.flags.ambientdoors.doorData.lockJinglePath;
-	const playVolume = this.wall.data.flags.ambientdoors.doorData.lockJingleLevel;
+	
+	const doorData = this.wall.data.flags.ambientdoors?.doorData || defaultDoorData();
+	const playpath = doorData.lockJinglePath;
+	const playVolume = doorData.lockJingleLevel;
 	
 	if(playpath != "" && playpath != null) AudioHelper.play({src: playpath, volume: playVolume, autoplay: true, loop: false}, true);
 	
 	//return true here to block the normal handler wich will only play sound on a per player basis.
 	return true;
+}
+
+//grab the default sounds from the config paths
+function defaultDoorData() {
+	return {
+		closePath: game.settings.get(mod, "closeDoorPathDefault"),
+		closeLevel: game.settings.get(mod, "closeDoorLevelDefault"),
+		openPath: game.settings.get(mod, "openDoorPathDefault"),
+		openLevel: game.settings.get(mod, "openDoorLevelDefault"),
+		lockPath: game.settings.get(mod, "lockDoorPathDefault"),
+		lockLevel: game.settings.get(mod, "lockDoorLevelDefault"),
+		unlockPath: game.settings.get(mod, "unlockDoorPathDefault"),
+		unlockLevel: game.settings.get(mod, "unlockDoorLevelDefault"),
+		lockJinglePath: game.settings.get(mod, "lockedDoorJinglePathDefault"),
+		lockJingleLevel: game.settings.get(mod, "lockedDoorJingleLevelDefault")
+	}
 }
 Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
 
@@ -37,48 +55,30 @@ Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
 	}	
 	
 	let doorData;
-	try
-	{doorData = object.flags.ambientdoors.doorData;} //If data is set us that
-	catch(err)
-	{
-		doorData = {
-			closePath: game.settings.get(mod, "closeDoorPathDefault"),
-			closeLevel: game.settings.get(mod, "closeDoorLevelDefault"),
-			openPath: game.settings.get(mod, "openDoorPathDefault"),
-			openLevel: game.settings.get(mod, "openDoorLevelDefault"),
-			lockPath: game.settings.get(mod, "lockDoorPathDefault"),
-			lockLevel: game.settings.get(mod, "lockDoorLevelDefault"),
-			unlockPath: game.settings.get(mod, "unlockDoorPathDefault"),
-			unlockLevel: game.settings.get(mod, "unlockDoorLevelDefault")
-		}
-	} //If no data is set use default sounds.
+	try { doorData = object.flags.ambientdoors.doorData; } //If data is set us that
+	catch(err) { doorData = defaultDoorData(); } //If no data is set use default sounds.
 	
 	let playpath = "";
 	let playVolume = 0.8;
 	
-	if(object.ds == 2) // Door Unlocking
-	{
+	if(object.ds == 2) { // Door Unlocking
 		playpath = doorData.unlockPath;
 		playVolume = doorData.unlockLevel;
 	}
-	else if(updateData.ds == 0) //Door Close
-	{
+	else if(updateData.ds == 0) { //Door Close
 		playpath = doorData.closePath;
 		playVolume = doorData.closeLevel;
 	}
-	else if(updateData.ds == 1) //Door Open
-	{
+	else if(updateData.ds == 1) {//Door Open
 		playpath = doorData.openPath;
 		playVolume = doorData.openLevel;
 	}
-	else if(updateData.ds == 2) // Door Lock
-	{
+	else if(updateData.ds == 2) {// Door Lock
 		playpath = doorData.lockPath;
 		playVolume = doorData.lockLevel;
 	}
 	
-	if(playpath != "" && playpath != null)
-	{
+	if(playpath != "" && playpath != null) {
 		AudioHelper.play({src: playpath, volume: playVolume, autoplay: true, loop: false}, true);
 	}
 	
@@ -86,8 +86,7 @@ Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
 
 Hooks.on("renderWallConfig", (app, html, data) => {
 
-	if(data.object.door == 0) // if it's not a door don't worry
-	{
+	if(data.object.door == 0) {// if it's not a door don't worry
 		app.setPosition({
 		height: 270,
 		width: 400
@@ -102,24 +101,11 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 
 	let thisDoor;
 	
-	if(app.object.getFlag(mod, "doorData") == null)
-	{
-		thisDoor = {
-			closePath: game.settings.get(mod, "closeDoorPathDefault"),
-			closeLevel: game.settings.get(mod, "closeDoorLevelDefault"),
-			openPath: game.settings.get(mod, "openDoorPathDefault"),
-			openLevel: game.settings.get(mod, "openDoorLevelDefault"),
-			lockPath: game.settings.get(mod, "lockDoorPathDefault"),
-			lockLevel: game.settings.get(mod, "lockDoorLevelDefault"),
-			unlockPath: game.settings.get(mod, "unlockDoorPathDefault"),
-			unlockLevel: game.settings.get(mod, "unlockDoorLevelDefault"),
-			lockJinglePath: game.settings.get(mod, "lockedDoorJinglePathDefault"),
-			lockJingleLevel: game.settings.get(mod, "lockedDoorJingleLevelDefault")
-		};
+	if(app.object.getFlag(mod, "doorData") == null) {
+		thisDoor = defaultDoorData;
 		app.object.setFlag(mod, "doorData", thisDoor);
 	}
-	else
-	{
+	else {
 		thisDoor = app.object.getFlag(mod, "doorData");
 	}
 	
