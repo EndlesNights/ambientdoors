@@ -48,8 +48,8 @@ function defaultDoorData() {
 }
 Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
 
-	if((object.door == 0 || updateData.ds == null) //If not a door OR door state not updating
-		|| this.game.data.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && this.game.keyboard.isDown("Alt")) // Sneaky Door Opening Mode
+	if((object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
+		|| this.game.data.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && this.game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
 	{
 		return;
 	}	
@@ -102,18 +102,18 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	let thisDoor;
 	
 	if(app.object.getFlag(mod, "doorData") == null) {
-		thisDoor = defaultDoorData;
+		thisDoor = defaultDoorData();
 		app.object.setFlag(mod, "doorData", thisDoor);
 	}
 	else {
 		thisDoor = app.object.getFlag(mod, "doorData");
 	}
-	
-	var closeFlag = thisDoor.closePath;
-	var openFlag = thisDoor.openPath;
-	var lockFlag = thisDoor.lockPath;
-	var unLockFlag = thisDoor.unlockPath;
-	var lockJingleFlag = thisDoor.lockJinglePath;
+
+	let closeFlag = thisDoor.closePath;
+	let openFlag = thisDoor.openPath;
+	let lockFlag = thisDoor.lockPath;
+	let unLockFlag = thisDoor.unlockPath;
+	let lockJingleFlag = thisDoor.lockJinglePath;
 	
 	const message =`
 	<div class="form-group">
@@ -138,7 +138,6 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 			<span class="range-value">${thisDoor.closeLevel}</span>
 		</div>
 	</div>	
-	
 	
     <div class="form-group">
 		<label>Door Open</label>

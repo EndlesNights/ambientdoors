@@ -2,7 +2,7 @@
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 2.2.1
+* **Version**: 2.2.2
 * **Foundry VTT Compatibility**: 0.6.0 to 0.7.9 (Havn't tried it with older versions)
 * **System Compatibility**: Universal
 
@@ -25,7 +25,12 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 
 ## Change Log
 
+**Version 2.2.2**
+
+*Fixed minnor issue where default values where not being set properly.
+
 **Version 2.2.1**
+
 *Issue where the default sounds where not being pulled propperly while doing jingle door check.
 * Clean up code little
 
