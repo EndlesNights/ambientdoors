@@ -22,7 +22,7 @@ Hooks.once("init", () => {
 function onDoorMouseDown(event) {
 	
 	const doorData = this.wall.data.flags.ambientdoors?.doorData || defaultDoorData();
-	const playpath = doorData.lockJinglePath;
+	const playpath = doorData.lockJinglePath === "DefaultSound"? game.settings.get(mod, "lockedDoorJinglePathDefault") : doorData.lockJinglePath;
 	const playVolume = doorData.lockJingleLevel;
 	
 	if(playpath != "" && playpath != null) AudioHelper.play({src: playpath, volume: playVolume, autoplay: true, loop: false}, true);
@@ -62,19 +62,19 @@ Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
 	let playVolume = 0.8;
 	
 	if(object.ds == 2) { // Door Unlocking
-		playpath = doorData.unlockPath;
+		playpath = doorData.unlockPath === "DefaultSound"? game.settings.get(mod, "unlockDoorPathDefault") : doorData.unlockPath;
 		playVolume = doorData.unlockLevel;
 	}
 	else if(updateData.ds == 0) { //Door Close
-		playpath = doorData.closePath;
+		playpath = doorData.closePath === "DefaultSound"? game.settings.get(mod, "closeDoorPathDefault") : doorData.closePath;
 		playVolume = doorData.closeLevel;
 	}
 	else if(updateData.ds == 1) {//Door Open
-		playpath = doorData.openPath;
+		playpath = doorData.openPath === "DefaultSound"? game.settings.get(mod, "openDoorPathDefault") : doorData.openPath;
 		playVolume = doorData.openLevel;
 	}
 	else if(updateData.ds == 2) {// Door Lock
-		playpath = doorData.lockPath;
+		playpath = doorData.lockPath === "DefaultSound"? game.settings.get(mod, "lockDoorPathDefault") : doorData.lockPath;
 		playVolume = doorData.lockLevel;
 	}
 	
@@ -102,7 +102,19 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	let thisDoor;
 	
 	if(app.object.getFlag(mod, "doorData") == null) {
-		thisDoor = defaultDoorData();
+		// thisDoor = defaultDoorData();
+		thisDoor = {
+			closePath: "DefaultSound",
+			closeLevel: game.settings.get(mod, "closeDoorLevelDefault"),
+			openPath: "DefaultSound",
+			openLevel: game.settings.get(mod, "openDoorLevelDefault"),
+			lockPath: "DefaultSound",
+			lockLevel: game.settings.get(mod, "lockDoorLevelDefault"),
+			unlockPath: "DefaultSound",
+			unlockLevel: game.settings.get(mod, "unlockDoorLevelDefault"),
+			lockJinglePath: "DefaultSound",
+			lockJingleLevel: game.settings.get(mod, "lockedDoorJingleLevelDefault")
+		};
 		app.object.setFlag(mod, "doorData", thisDoor);
 	}
 	else {

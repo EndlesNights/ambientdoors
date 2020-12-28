@@ -2,7 +2,7 @@
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 2.2.2
+* **Version**: 2.2.3
 * **Foundry VTT Compatibility**: 0.6.0 to 0.7.9 (Havn't tried it with older versions)
 * **System Compatibility**: Universal
 
@@ -24,6 +24,10 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 
 
 ## Change Log
+
+**Version 2.2.3**
+
+*Doors sound Paths can now be set to "DefaultSound", that door will always use the default sounds that are currently set in the configation window. "DefaultSound" is now the default that all new configured doors are set to.
 
 **Version 2.2.2**
 
