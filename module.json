@@ -8,6 +8,6 @@
 	"compatibleCoreVersion": "0.7.9",
 	"scripts": ["door.js"],
 	"url": "https://github.com/EndlesNights/ambientdoors",
-	"manifest": "https://raw.githubusercontent.com/EndlesNights/ambientdoors/master/module.json",
-	"download": "https://github.com/EndlesNights/ambientdoors/raw/master/ambientdoors.zip"
+	"manifest": "https://raw.githubusercontent.com/EndlesNights/ambientdoors/0.7.9/module.json",
+	"download": "https://github.com/EndlesNights/ambientdoors/raw/0.7.9/ambientdoors.zip"
 }
