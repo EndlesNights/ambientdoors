@@ -46,7 +46,7 @@ function defaultDoorData() {
 		lockJingleLevel: game.settings.get(mod, "lockedDoorJingleLevelDefault")
 	}
 }
-Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
+Hooks.on("preUpdateWall", async (object, updateData, diff, userID) => {
 
 	if((object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
 		|| this.game.data.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && this.game.keyboard.isDown("Alt")) // Exit if Sneaky Door Opening Mode
@@ -55,13 +55,12 @@ Hooks.on("preUpdateWall", async (scene, object, updateData, diff, userID) => {
 	}	
 	
 	let doorData;
-	try { doorData = object.flags.ambientdoors.doorData; } //If data is set us that
-	catch(err) { doorData = defaultDoorData(); } //If no data is set use default sounds.
-	
+	try { doorData = object.data.flags.ambientdoors.doorData; } //If data is set us that
+	catch(err) { doorData = defaultDoorData();} //If no data is set use default sounds.
 	let playpath = "";
 	let playVolume = 0.8;
 	
-	if(object.ds == 2) { // Door Unlocking
+	if(object.data.ds == 2) { // Door Unlocking
 		playpath = doorData.unlockPath === "DefaultSound"? game.settings.get(mod, "unlockDoorPathDefault") : doorData.unlockPath;
 		playVolume = doorData.unlockLevel;
 	}
@@ -95,7 +94,7 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	}
 	
 	app.setPosition({
-		height: 650,
+		height: 678,
 		width: 520
 	});
 
@@ -133,10 +132,10 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 		<p class="notes"> File pathway to the soundeffect that will be played whenever a doors state is changed. Leave the pathway blank, or turn the level to zero for no sound effect. </p>
 	</div>
 	
-    <div class="form-group">
+	<div class="form-group">
 		<label>Door Close</label>
 		<div class="form-fields">
-			<button type="button" class="file-picker" data-type="sound" data-target="flags.ambientdoors.doorData.closePath" title="Browse Files" tabindex="-1">
+			<button type="button" class="file-picker" data-type="audio" data-target="flags.ambientdoors.doorData.closePath" title="Browse Files" tabindex="-1" name="audio-picker">
 				<i class="fas fa-file-import fa-fw"></i>
 			</button>
 			<input class="sound" type="text" name="flags.ambientdoors.doorData.closePath" value="${closeFlag ? closeFlag : ``}" placeholder="Door Close Sound Path" data-dtype="String" />
@@ -151,10 +150,10 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 		</div>
 	</div>	
 	
-    <div class="form-group">
+	<div class="form-group">
 		<label>Door Open</label>
 		<div class="form-fields">
-			<button type="button" class="file-picker" data-type="sound" data-target="flags.ambientdoors.doorData.openPath" title="Browse Files" tabindex="-1">
+			<button type="button" class="file-picker" data-type="audio" data-target="flags.ambientdoors.doorData.openPath" title="Browse Files" tabindex="-1">
 				<i class="fas fa-file-import fa-fw"></i>
 			</button>
 			<input class="sound" type="text" name="flags.ambientdoors.doorData.openPath" value="${openFlag ? openFlag : ``}" placeholder="Door Open Sound Path" data-dtype="String" />
@@ -172,7 +171,7 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	<div class="form-group">
 		<label>Door Lock</label>
 		<div class="form-fields">
-			<button type="button" class="file-picker" data-type="sound" data-target="flags.ambientdoors.doorData.lockPath" title="Browse Files" tabindex="-1">
+			<button type="button" class="file-picker" data-type="audio" data-target="flags.ambientdoors.doorData.lockPath" title="Browse Files" tabindex="-1">
 				<i class="fas fa-file-import fa-fw"></i>
 			</button>
 			<input class="sound" type="text" name="flags.ambientdoors.doorData.lockPath" value="${lockFlag ? lockFlag : ``}" placeholder="Door Lock Sound Path" data-dtype="String" />
@@ -190,7 +189,7 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	<div class="form-group">
 		<label>Door Unlock</label>
 		<div class="form-fields">
-			<button type="button" class="file-picker" data-type="sound" data-target="flags.ambientdoors.doorData.unlockPath" title="Browse Files" tabindex="-1">
+			<button type="button" class="file-picker" data-type="audio" data-target="flags.ambientdoors.doorData.unlockPath" title="Browse Files" tabindex="-1">
 				<i class="fas fa-file-import fa-fw"></i>
 			</button>
 			<input class="sound" type="text" name="flags.ambientdoors.doorData.unlockPath" value="${unLockFlag ? unLockFlag : ``}" placeholder="Door Unlock Sound Path" data-dtype="String" />
@@ -205,10 +204,10 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 		</div>
 	</div>
 	
-    <div class="form-group">
+	<div class="form-group">
 		<label>Locked Door Jingle</label>
 		<div class="form-fields">
-			<button type="button" class="file-picker" data-type="sound" data-target="flags.ambientdoors.doorData.lockJinglePath" title="Browse Files" tabindex="-1">
+			<button type="button" class="file-picker" data-type="audio" data-target="flags.ambientdoors.doorData.lockJinglePath" title="Browse Files" tabindex="-1">
 				<i class="fas fa-file-import fa-fw"></i>
 			</button>
 			<input class="sound" type="text" name="flags.ambientdoors.doorData.lockJinglePath" value="${lockJingleFlag ? lockJingleFlag : ``}" placeholder="Locked Door Jingle Sound Path" data-dtype="String" />
@@ -225,23 +224,14 @@ Hooks.on("renderWallConfig", (app, html, data) => {
 	`
 
 	html.find(".form-group").last().after(message);
-	const button = html.find('button[data-target="flags.ambientdoors.doorData.closePath"]')[0];
-	const button2 = html.find('button[data-target="flags.ambientdoors.doorData.openPath"]')[0];
-	const button3 = html.find('button[data-target="flags.ambientdoors.doorData.lockPath"]')[0];
-	const button4 = html.find('button[data-target="flags.ambientdoors.doorData.unlockPath"]')[0];
-	const button5 = html.find('button[data-target="flags.ambientdoors.doorData.lockJinglePath"]')[0];
-	
-	app._activateFilePicker(button);
-	app._activateFilePicker(button2);
-	app._activateFilePicker(button3);
-	app._activateFilePicker(button4);
-	app._activateFilePicker(button5);
+	app.activateListeners(html);
+
 });
 
 Hooks.on("ready", () => {
 	game.settings.register(mod, "stealthDoor",{
 		name: "Silent Door Permission Level",
-        hint: "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
+		hint: "The required role permission level to use the silent door open/close feature. (Alt + Click the Door)",
 		scope: "world",
 		config: true,
 		default: "2",
@@ -249,98 +239,98 @@ Hooks.on("ready", () => {
 		type: String
 	});
 
-    game.settings.register(mod, "closeDoorPathDefault", {
-        name: "Door Close",
-        hint: "The default sound effect that will be played when a door is closed.",
-        scope: 'world',
-        config: true,
-        default: "modules/ambientdoors/defaultSounds/DoorCloseSound.wav",
-        type: String
-    });
+	game.settings.register(mod, "closeDoorPathDefault", {
+		name: "Door Close",
+		hint: "The default sound effect that will be played when a door is closed.",
+		scope: 'world',
+		config: true,
+		default: "modules/ambientdoors/defaultSounds/DoorCloseSound.wav",
+		type: String
+	});
 
-    game.settings.register(mod, "closeDoorLevelDefault", {
-        name: "Close Door Volume Level",
-        hint: "The default volume level that the close door SFX will be played at.",
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
+	game.settings.register(mod, "closeDoorLevelDefault", {
+		name: "Close Door Volume Level",
+		hint: "The default volume level that the close door SFX will be played at.",
+		scope: 'world',
+		config: true,
+		default: 0.8,
+		type: Number,
 		range: {min:0, max:2, step:0.05}
-    });
+	});
 
-    game.settings.register(mod, "openDoorPathDefault", {
-        name: "Door Open",
-        hint: "The default sound effect that will be played when a door is opened.",
-        scope: 'world',
-        config: true,
-        default: "modules/ambientdoors/defaultSounds/DoorOpenSound.wav",
-        type: String
-    });
+	game.settings.register(mod, "openDoorPathDefault", {
+		name: "Door Open",
+		hint: "The default sound effect that will be played when a door is opened.",
+		scope: 'world',
+		config: true,
+		default: "modules/ambientdoors/defaultSounds/DoorOpenSound.wav",
+		type: String
+	});
 
-    game.settings.register(mod, "openDoorLevelDefault", {
-        name: "Open Door Volume Level",
-        hint: "The default volume level that the open door SFX will be played at.",
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
+	game.settings.register(mod, "openDoorLevelDefault", {
+		name: "Open Door Volume Level",
+		hint: "The default volume level that the open door SFX will be played at.",
+		scope: 'world',
+		config: true,
+		default: 0.8,
+		type: Number,
 		range: {min:0, max:2, step:0.05}
-    });
+	});
 
-    game.settings.register(mod, "lockDoorPathDefault", {
-        name: "Door Lock",
-        hint: "The default sound effect that will be played when a door is locked.",
-        scope: 'world',
-        config: true,
-        default: "modules/ambientdoors/defaultSounds/DoorLockSound.wav",
-        type: String
-    });
+	game.settings.register(mod, "lockDoorPathDefault", {
+		name: "Door Lock",
+		hint: "The default sound effect that will be played when a door is locked.",
+		scope: 'world',
+		config: true,
+		default: "modules/ambientdoors/defaultSounds/DoorLockSound.wav",
+		type: String
+	});
 
-    game.settings.register(mod, "lockDoorLevelDefault", {
-        name: "Close Lock Volume Level",
-        hint: "The default volume level that the lock door SFX will be played at.",
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
+	game.settings.register(mod, "lockDoorLevelDefault", {
+		name: "Close Lock Volume Level",
+		hint: "The default volume level that the lock door SFX will be played at.",
+		scope: 'world',
+		config: true,
+		default: 0.8,
+		type: Number,
 		range: {min:0, max:2, step:0.05}
-    });
+	});
 	
-    game.settings.register(mod, "unlockDoorPathDefault", {
-        name: "Door Unlock",
-        hint: "The default sound effect that will be played when a door is unlocked.",
-        scope: 'world',
-        config: true,
-        default: "modules/ambientdoors/defaultSounds/DoorUnlockSound.wav",
-        type: String
-    });
+	game.settings.register(mod, "unlockDoorPathDefault", {
+		name: "Door Unlock",
+		hint: "The default sound effect that will be played when a door is unlocked.",
+		scope: 'world',
+		config: true,
+		default: "modules/ambientdoors/defaultSounds/DoorUnlockSound.wav",
+		type: String
+	});
 
-    game.settings.register(mod, "unlockDoorLevelDefault", {
-        name: "Unlock Door Volume Level",
-        hint: "The default volume level that the unlock door SFX will be played at.",
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
+	game.settings.register(mod, "unlockDoorLevelDefault", {
+		name: "Unlock Door Volume Level",
+		hint: "The default volume level that the unlock door SFX will be played at.",
+		scope: 'world',
+		config: true,
+		default: 0.8,
+		type: Number,
 		range: {min:0, max:2, step:0.05}
-    });	
+	});	
 	
-    game.settings.register(mod, "lockedDoorJinglePathDefault", {
-        name: "Locked Door Jingle",
-        hint: "The default sound effect that will be played when a locked door is attempted to be opened.",
-        scope: 'world',
-        config: true,
-        default: "sounds/lock.wav",
-        type: String
-    });
+	game.settings.register(mod, "lockedDoorJinglePathDefault", {
+		name: "Locked Door Jingle",
+		hint: "The default sound effect that will be played when a locked door is attempted to be opened.",
+		scope: 'world',
+		config: true,
+		default: "sounds/lock.wav",
+		type: String
+	});
 
-    game.settings.register(mod, "lockedDoorJingleLevelDefault", {
-        name: "Locked Door Jingle Volume Level",
-        hint: "The default volume level that the unlock door SFX will be played at.",
-        scope: 'world',
-        config: true,
-        default: 0.8,
-        type: Number,
+	game.settings.register(mod, "lockedDoorJingleLevelDefault", {
+		name: "Locked Door Jingle Volume Level",
+		hint: "The default volume level that the unlock door SFX will be played at.",
+		scope: 'world',
+		config: true,
+		default: 0.8,
+		type: Number,
 		range: {min:0, max:2, step:0.05}
-    });
+	});
 });

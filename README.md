@@ -1,9 +1,9 @@
-![](https://img.shields.io/badge/Foundry-v0.7.9-informational)
+![](https://img.shields.io/badge/Foundry-v0.8.6-informational)
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 2.2.3
-* **Foundry VTT Compatibility**: 0.6.0 to 0.7.9 (Havn't tried it with older versions)
+* **Version**: 2.2.4
+* **Foundry VTT Compatibility**: 0.8.5 to 0.8.6 (Havn't tried it with older versions)
 * **System Compatibility**: Universal
 
 ### Link(s) to Module
@@ -25,29 +25,32 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 
 ## Change Log
 
+**Version 2.2.4**
+* Update to Foundry VTT 0.8.6 Stable Release.
+
 **Version 2.2.3**
 
-*Doors sound Paths can now be set to "DefaultSound", that door will always use the default sounds that are currently set in the configation window. "DefaultSound" is now the default that all new configured doors are set to.
+* Doors sound Paths can now be set to "DefaultSound", that door will always use the default sounds that are currently set in the configation window. "DefaultSound" is now the default that all new configured doors are set to.
 
 **Version 2.2.2**
 
-*Fixed minnor issue where default values where not being set properly.
+* Fixed minnor issue where default values where not being set properly.
 
 **Version 2.2.1**
 
-*Issue where the default sounds where not being pulled propperly while doing jingle door check.
+* Issue where the default sounds where not being pulled propperly while doing jingle door check.
 * Clean up code little
 
 **Version 2.2.0**
 
-*Update to Foundry VTT 0.7.9
-*Added an option to custimize the lock jingle sound effect that plays when attempting to open a locked door.
-*Lock jingle sound effect now players for everyone instead of just the user attempting to open the door.
+* Update to Foundry VTT 0.7.9
+* Added an option to custimize the lock jingle sound effect that plays when attempting to open a locked door.
+* Lock jingle sound effect now players for everyone instead of just the user attempting to open the door.
 
 **Version 2.1.0**
 
-*Update to Foundry VTT 0.7.5
-*Added Silent Door Open mode, with configurable permissions, if a valid user opens a door while holding down Alt, the doors audio will not play.
+* Update to Foundry VTT 0.7.5
+* Added Silent Door Open mode, with configurable permissions, if a valid user opens a door while holding down Alt, the doors audio will not play.
 
 **Version 2.0.0**
 
