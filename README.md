@@ -2,8 +2,8 @@
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 2.2.4
-* **Foundry VTT Compatibility**: 0.8.5 to 0.8.6 (Havn't tried it with older versions)
+* **Version**: 2.2.6
+* **Foundry VTT Compatibility**: v9
 * **System Compatibility**: Universal
 
 ### Link(s) to Module
@@ -24,6 +24,9 @@ Extract the query.zip file to the public/modules directory. Use the `Manage Modu
 
 
 ## Change Log
+
+**Version 2.2.6**
+* Updated to Foundry VTT v9
 
 **Version 2.2.4**
 * Update to Foundry VTT 0.8.6 Stable Release.
