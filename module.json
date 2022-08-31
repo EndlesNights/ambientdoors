@@ -1,9 +1,16 @@
 {
+	"id": "ambientdoors",
 	"name": "ambientdoors",
 	"title": "Ambient Doors",
 	"description": "A controller for playing ambient sounds effects when opening and closing doors",
 	"version": "2.3.0",
 	"author": "EndlesNights#9000",
+	"authors":[{
+		"name": "EndlesNights",
+		"url": "https://gitlab.com/EndlesNights",
+		"email": "endlesnights@gmail.com",
+		"discord": "endlesnights#9000"
+	}],
 	"minimumCoreVersion": "10",
 	"compatibleCoreVersion": "10",
 	"compatibility": {
