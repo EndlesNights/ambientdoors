@@ -10,7 +10,7 @@ Hooks.once("init", () => {
 	DoorControl.prototype._onMouseDown = function (event) {
 		
 		//check to see if the door is locked, otherwise use normal handler
-		if(this.wall.data.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+		if(this.wall.ds === CONST.WALL_DOOR_STATES.LOCKED) {
 			// Call new handler first. Only allow the original handler to run if our new handler does not return ture
 			const eventLockJingle = onDoorMouseDown.call(this, event)
 			if (eventLockJingle) return
@@ -21,7 +21,7 @@ Hooks.once("init", () => {
 
 function onDoorMouseDown(event) {
 	
-	const doorData = this.wall.data.flags.ambientdoors?.doorData || defaultDoorData();
+	const doorData = this.wall.flags.ambientdoors?.doorData || defaultDoorData();
 	const playpath = doorData.lockJinglePath === "DefaultSound"? game.settings.get(mod, "lockedDoorJinglePathDefault") : doorData.lockJinglePath;
 	const playVolume = doorData.lockJingleLevel;
 	
@@ -49,18 +49,18 @@ function defaultDoorData() {
 Hooks.on("preUpdateWall", async (object, updateData, diff, userID) => {
 
 	if((object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
-		|| this.game.data.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && this.game.keyboard.downKeys.has(game.keybindings.bindings.get(`${mod}.sneakyDoor`)[0].key)) // Exit if Sneaky Door Opening Mode
+		|| this.game.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && this.game.keyboard.downKeys.has(game.keybindings.bindings.get(`${mod}.sneakyDoor`)[0].key)) // Exit if Sneaky Door Opening Mode
 	{
 		return;
 	}	
 	
 	let doorData;
-	try { doorData = object.data.flags.ambientdoors.doorData; } //If data is set us that
+	try { doorData = object.flags.ambientdoors.doorData; } //If data is set us that
 	catch(err) { doorData = defaultDoorData();} //If no data is set use default sounds.
 	let playpath = "";
 	let playVolume = 0.8;
 	
-	if(object.data.ds == 2) { // Door Unlocking
+	if(object.ds == 2) { // Door Unlocking
 		playpath = doorData.unlockPath === "DefaultSound"? game.settings.get(mod, "unlockDoorPathDefault") : doorData.unlockPath;
 		playVolume = doorData.unlockLevel;
 	}
