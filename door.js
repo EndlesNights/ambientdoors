@@ -1,8 +1,7 @@
-var superwall_id = '';
-var mod = "ambientdoors"; // our mod scope & name
+const mod = "ambientdoors"; //mod scope & name
 
 //TODO
-//Change Play to play ambient sound, add range value. If global range, play sound as is. Waiting  on Foundry 0.8.x
+//Change Play to play ambient sound, add range value. If global range, play sound as is.
 
 Hooks.once("init", () => {
 	//get the core doorMouse handler to be used in most cases
@@ -335,7 +334,7 @@ Hooks.on("init", () => {
     });
 
 	game.keybindings.register(mod, "sneakyDoor", {
-		name: "Quite Door hotkey",
+		name: "Quiet Door hotkey",
 		hint: "Use this key when opening/closing or locking/unlocking a door ",
 		editable: [
 		  {

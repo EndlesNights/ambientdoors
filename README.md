@@ -2,8 +2,8 @@
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 2.2.6
-* **Foundry VTT Compatibility**: v9
+* **Version**: 2.3.0
+* **Foundry VTT Compatibility**: v10
 * **System Compatibility**: Universal
 
 ### Link(s) to Module
@@ -19,11 +19,11 @@ Ambient Doors module for Foundry VTT - Adds easily customized sounds effects tha
 * Click "Install"
 * Activate the module in your World using **Manage Modules** under the **Game Settings** tab.
 
-### Method 2
-Extract the query.zip file to the public/modules directory. Use the `Manage Modules` in your World on the Settings tab of the sidebar on the right and then enable the `Ambient Doors` module.
-
 
 ## Change Log
+
+**Version 2.3.0**
+* Updated to Foundry VTT v10
 
 **Version 2.2.6**
 * Updated to Foundry VTT v9
