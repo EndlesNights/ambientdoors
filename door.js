@@ -47,9 +47,12 @@ function defaultDoorData() {
 }
 Hooks.on("preUpdateWall", async (object, updateData, diff, userID) => {
 
-	if((object.door == 0 || updateData.ds == null) //Exit early if not a door OR door state not updating
-		|| this.game.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && this.game.keyboard.downKeys.has(game.keybindings.bindings.get(`${mod}.sneakyDoor`)[0].key)) // Exit if Sneaky Door Opening Mode
-	{
+	if(object.door == 0 || updateData.ds == null){ //Exit early if not a door OR door state not updating
+		return;
+	}
+
+	const sneakyDoorBinding = game.keybindings.bindings.get(`${mod}.sneakyDoor`)[0];
+	if(sneakyDoorBinding && this.game.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && this.game.keyboard.downKeys.has(sneakyDoorBinding.key)){ // Exit if Sneaky Door Opening Mode
 		return;
 	}	
 	

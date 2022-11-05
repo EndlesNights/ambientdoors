@@ -1,24 +1,25 @@
 {
-	"id": "ambientdoors",
-	"name": "ambientdoors",
-	"title": "Ambient Doors",
-	"description": "A controller for playing ambient sounds effects when opening and closing doors",
-	"version": "2.3.0",
-	"author": "EndlesNights#9000",
-	"authors":[{
-		"name": "EndlesNights",
-		"url": "https://gitlab.com/EndlesNights",
-		"email": "endlesnights@gmail.com",
-		"discord": "endlesnights#9000"
-	}],
-	"minimumCoreVersion": "10",
-	"compatibleCoreVersion": "10",
-	"compatibility": {
-		"minimum": "10",
-		"verified": "10"
+  "id": "ambientdoors",
+  "title": "Ambient Doors",
+  "description": "A controller for playing ambient sounds effects when opening and closing doors",
+  "version": "2.3.1",
+  "authors": [
+    {
+      "name": "EndlesNights",
+      "url": "https://gitlab.com/EndlesNights",
+      "email": "endlesnights@gmail.com",
+      "discord": "endlesnights#9000",
+      "flags": {}
+    }
+  ],
+  "compatibility": {
+    "minimum": "10",
+    "verified": "10"
   },
-	"scripts": ["door.js"],
-	"url": "https://github.com/EndlesNights/ambientdoors",
-	"manifest": "https://raw.githubusercontent.com/EndlesNights/ambientdoors/master/module.json",
-	"download": "https://github.com/EndlesNights/ambientdoors/archive/2.3.0.zip"
+  "scripts": [
+    "door.js"
+  ],
+  "url": "https://github.com/EndlesNights/ambientdoors",
+  "manifest": "https://raw.githubusercontent.com/EndlesNights/ambientdoors/master/module.json",
+  "download": "https://github.com/EndlesNights/ambientdoors/archive/2.3.1.zip"
 }

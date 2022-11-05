@@ -22,6 +22,9 @@ Ambient Doors module for Foundry VTT - Adds easily customized sounds effects tha
 
 ## Change Log
 
+**Version 2.3.1**
+* Fixed an issue where sounds would not play if the Quiet Door hotkey was not set.
+
 **Version 2.3.0**
 * Updated to Foundry VTT v10
 
