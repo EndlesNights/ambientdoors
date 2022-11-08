@@ -2,7 +2,7 @@
   "id": "ambientdoors",
   "title": "Ambient Doors",
   "description": "A controller for playing ambient sounds effects when opening and closing doors",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "authors": [
     {
       "name": "EndlesNights",
@@ -21,5 +21,5 @@
   ],
   "url": "https://github.com/EndlesNights/ambientdoors",
   "manifest": "https://raw.githubusercontent.com/EndlesNights/ambientdoors/master/module.json",
-  "download": "https://github.com/EndlesNights/ambientdoors/archive/2.3.1.zip"
+  "download": "https://github.com/EndlesNights/ambientdoors/archive/2.3.2.zip"
 }

@@ -2,7 +2,7 @@
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
-* **Version**: 2.3.0
+* **Version**: 2.3.2
 * **Foundry VTT Compatibility**: v10
 * **System Compatibility**: Universal
 
@@ -21,6 +21,9 @@ Ambient Doors module for Foundry VTT - Adds easily customized sounds effects tha
 
 
 ## Change Log
+
+**Version 2.3.2**
+* Fixed an issue where door jingle sound effect would not play for other users.
 
 **Version 2.3.1**
 * Fixed an issue where sounds would not play if the Quiet Door hotkey was not set.

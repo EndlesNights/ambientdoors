@@ -7,12 +7,11 @@ Hooks.once("init", () => {
 	//get the core doorMouse handler to be used in most cases
 	const doorMouseDownHandler = DoorControl.prototype._onMouseDown;
 	DoorControl.prototype._onMouseDown = function (event) {
-		
 		//check to see if the door is locked, otherwise use normal handler
-		if(this.wall.ds === CONST.WALL_DOOR_STATES.LOCKED) {
+		if(this.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED) {
 			// Call new handler first. Only allow the original handler to run if our new handler does not return ture
 			const eventLockJingle = onDoorMouseDown.call(this, event)
-			if (eventLockJingle) return
+			if (eventLockJingle) return;
 		}
 		return doorMouseDownHandler.call(this, event)
 	}
@@ -20,7 +19,7 @@ Hooks.once("init", () => {
 
 function onDoorMouseDown(event) {
 	
-	const doorData = this.wall.flags.ambientdoors?.doorData || defaultDoorData();
+	const doorData = this.wall.document.flags.ambientdoors?.doorData || defaultDoorData();
 	const playpath = doorData.lockJinglePath === "DefaultSound"? game.settings.get(mod, "lockedDoorJinglePathDefault") : doorData.lockJinglePath;
 	const playVolume = doorData.lockJingleLevel;
 	
