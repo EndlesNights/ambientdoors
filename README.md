@@ -23,6 +23,9 @@ Ambient Doors module for Foundry VTT - Adds easily customized sounds effects tha
 ## Change Log
 
 **Version 2.3.2**
+* Added libwrapped as a dependency, now uses libwrapped to wrap core function rather than manually overriding it, which may cause conflicts with other modules. 
+
+**Version 2.3.2**
 * Fixed an issue where door jingle sound effect would not play for other users.
 
 **Version 2.3.1**

@@ -1,20 +1,26 @@
+import { libWrapper } from './shim.js';
+
 const mod = "ambientdoors"; //mod scope & name
 
 //TODO
 //Change Play to play ambient sound, add range value. If global range, play sound as is.
 
 Hooks.once("init", () => {
-	//get the core doorMouse handler to be used in most cases
-	const doorMouseDownHandler = DoorControl.prototype._onMouseDown;
-	DoorControl.prototype._onMouseDown = function (event) {
+
+	libWrapper.register(
+		mod, "DoorControl.prototype._onMouseDown",
+		function (wrapped, event) {
+
 		//check to see if the door is locked, otherwise use normal handler
 		if(this.wall.document.ds === CONST.WALL_DOOR_STATES.LOCKED) {
-			// Call new handler first. Only allow the original handler to run if our new handler does not return ture
+			// Call custom handler first. Only call the original handler to run if our new handler does not return ture
 			const eventLockJingle = onDoorMouseDown.call(this, event)
 			if (eventLockJingle) return;
 		}
-		return doorMouseDownHandler.call(this, event)
-	}
+		return wrapped(event);
+		},
+		"MIXED",
+	);
 });
 
 function onDoorMouseDown(event) {
@@ -51,7 +57,7 @@ Hooks.on("preUpdateWall", async (object, updateData, diff, userID) => {
 	}
 
 	const sneakyDoorBinding = game.keybindings.bindings.get(`${mod}.sneakyDoor`)[0];
-	if(sneakyDoorBinding && this.game.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && this.game.keyboard.downKeys.has(sneakyDoorBinding.key)){ // Exit if Sneaky Door Opening Mode
+	if(sneakyDoorBinding && game.users.find(x => x._id === userID ).role >= game.settings.get(mod, "stealthDoor") && game.keyboard.downKeys.has(sneakyDoorBinding.key)){ // Exit if Sneaky Door Opening Mode
 		return;
 	}	
 	
