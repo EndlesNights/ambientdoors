@@ -1,4 +1,3 @@
-![](https://img.shields.io/badge/Foundry-v0.8.6-informational)
 ## Ambient Doors
 
 * **Author**: EndlesNights#9000
